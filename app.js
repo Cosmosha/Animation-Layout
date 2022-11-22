@@ -20,3 +20,32 @@ links.forEach(link => {
         });
     });
 });
+
+//Cards
+const cards = document.querySelectorAll('.card');
+
+cards.forEach((card, index) => {
+    card.addEventListener('click', () => {
+        //Get state
+        const state = Flip.getState(cards);
+
+        //Add active class to the clicked event & inacitve event to unclicked elements
+        const isCardActive = card.classList.contains('active');
+        cards.forEach((otherCards, otherIndex) => {
+            otherCards.classList.remove('active');
+            otherCards.classList.remove('is-inacitve');
+            if (!isCardActive && index !== otherIndex) {
+                otherCards.classList.add('is-inactive');
+            } else {
+                otherCards.classList.remove('is-inactive');
+            }
+        });
+        if (!isCardActive) card.classList.add('active');
+
+        Flip.from(state, {
+            duration: 1,
+            ease: 'expo.out',
+            absoulte: true,
+        });
+    });
+});
